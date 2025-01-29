@@ -1,8 +1,8 @@
-import React from 'react';
-import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '@/app/App';
+import { RootStackParamList } from '@/app/App'; import CheckBox from '@react-native-community/checkbox'; // Import CheckBox from the package
 
 const { width, height } = Dimensions.get('window');
 
@@ -10,63 +10,84 @@ type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Second
 
 export default function Login() {
   const navigation = useNavigation<LoginScreenNavigationProp>();
-
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
+    <View style={styles.container}>
+      {/* Welcome Text */}
+      <Text style={styles.welcomeText}>
+        Hi, Welcome Back! 👋
+      </Text>
 
-        <View style={styles.overlay}>
-          <Text style={styles.contentText}>Water as clear as a million pixels.</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.buttonText}>Log In</Text> 
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Signup')}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      {/* Email Input */}
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="example@gmail.com"
+        keyboardType="email-address"
+      />
+
+      {/* Password Input */}
+      <Text style={styles.label}>Password</Text>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Enter Your Password"
+          secureTextEntry={!isPasswordVisible}
+        />
+        <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+          <Text style={styles.eyeIcon}>{isPasswordVisible ? '🙈' : '👁️'}</Text>
+        </TouchableOpacity>
+      </View>
+   
+   
   
+        </View>
+    
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: width * 0.05, // Responsive padding
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  contentText: {
-    color: 'white',
-    fontSize: width * 0.05, // Responsive font size
-    textAlign: 'center',
-    marginBottom: height * 0.03, // Responsive margin
-  },
-  buttonContainer: {
-    width: '100%',
-    paddingHorizontal: width * 0.1, // Responsive padding
-    marginBottom: height * 0.02, // Responsive margin
-  },
-  button: {
     backgroundColor: 'white',
-    paddingVertical: width * 0.03, // Responsive padding
-    borderRadius: 10,
-    marginBottom: height * 0.02, // Responsive margin
+    padding: 24,
+    justifyContent: 'center',
+  },
+  welcomeText: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 24,
+  },
+  label: {
+    color: 'black',
+  },
+  input: {
+    borderColor: '#cccccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  passwordContainer: {
+    borderColor: '#cccccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  buttonText: {
-    color: 'black',
-    fontSize: width * 0.04, // Responsive font size
-    fontWeight: 'bold',
+  passwordInput: {
+    flex: 1,
   },
+  eyeIcon: {
+    color: '#7a7a7a',
+  },
+
 });
