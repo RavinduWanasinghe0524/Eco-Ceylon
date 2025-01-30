@@ -1,63 +1,254 @@
-import React from 'react';
-import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Image, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 'react-native'; 
+import Checkbox from 'expo-checkbox'; // Imported from expo-checkbox
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '@/app/App';
 
 const { width, height } = Dimensions.get('window');
 
-export default function SecondPage() {
-  return (
-       
-        <View style={styles.overlay}>
-          <Text style={styles.contentText}>Water as clear as a million pixels.</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
+type SignupScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Signup'>;
+
+export default function Signup() {
+     const navigation = useNavigation<SignupScreenNavigationProp>();
+     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+     const [isChecked, setIsChecked] = useState(false);
+
+   return (
+      <View style={styles.container}>
+        {/* Welcome Text */}
+        <Text style={styles.welcomeText}>
+          Create an account
+        </Text>
+
+        {/*  Text */}
+        <Text style={styles.Text}>
+          Join and earn Today
+        </Text>
+  
+        {/* username Input */}
+        <Text style={styles.label}>Username</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your Username"
+          keyboardType="email-address"
+        />
+
+         {/* Email Input */}
+         <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your Email"
+          keyboardType="email-address"
+        />
+
+         {/* NIC Input */}
+         <Text style={styles.label}>NIC Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your NIC Number"
+          keyboardType="email-address"
+        />
+
+         {/* Phone number Input */}
+         <Text style={styles.label}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your Phone Number"
+          keyboardType="email-address"
+        />
+  
+        {/* Password Input */}
+        <Text style={styles.label}>Password</Text>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Enter Your Password"
+            secureTextEntry={!isPasswordVisible}
+          />
+          <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+            <Text style={styles.eyeIcon}>{isPasswordVisible ? '🙈' : '👁️'}</Text>
+          </TouchableOpacity>
         </View>
-      
-   
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-
-  background: {
-
-  },
-
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: width * 0.05, // Responsive padding
-    alignItems: 'center',
-  },
-  contentText: {
-    color: 'white',
-    fontSize: width * 0.05, // Responsive font size
-    textAlign: 'center',
-    marginBottom: height * 0.03, // Responsive margin
-  },
-  buttonContainer: {
-    width: '100%',
-    paddingHorizontal: width * 0.1, // Responsive padding
-    marginBottom: height * 0.02, // Responsive margin
-  },
-  button: {
-    backgroundColor: 'white',
-    paddingVertical: width * 0.03, // Responsive padding
-    borderRadius: 10,
-    marginBottom: height * 0.02, // Responsive margin
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'black',
-    fontSize: width * 0.04, // Responsive font size
-    fontWeight: 'bold',
-  },
-});
+  
+        {/* Remember Me & Forgot Password */}
+        <View style={styles.rememberForgotContainer}>
+          <View style={styles.rememberContainer}>
+            <Checkbox value={isChecked} onValueChange={setIsChecked} />
+            <Text style={styles.rememberText}>Remember Me</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Forget')}>
+            <Text style={styles.forgotText}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </View>  
+  
+        {/* Signup Button */}
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginButtonText}>Signup</Text>
+        </TouchableOpacity>
+  
+        {/* OR Separator */}
+        <View style={styles.orSeparator}>
+          <View style={styles.separatorLine} />
+          <Text style={styles.orText}>Or With</Text>
+          <View style={styles.separatorLine} />
+        </View>
+  
+        {/* Social Logins */}
+        <TouchableOpacity style={styles.facebookButton}>
+          <Image source={require('@/assets/images/fb.png')} style={styles.socialIcon} />
+          <Text style={styles.socialButtonText}>Login with Facebook</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity style={styles.googleButton}>
+          <Image source={require('@/assets/images/google.png')} style={styles.socialIcon} />
+          <Text style={styles.socialGoogleText}>Login with Google</Text>
+        </TouchableOpacity>
+        
+        {/* Sign Up Link */}
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')} >
+            <Text style={styles.signupLink}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+      padding: 24,
+      justifyContent: 'center',
+    },
+    welcomeText: {
+      textAlign: 'center',
+      fontSize: 24,
+      fontWeight: 'bold',
+    
+    },
+    Text: {
+      textAlign: 'center',
+      fontSize: 15,
+      marginBottom: 24,
+ 
+    },
+    label: {
+      color: 'black',
+    },
+    input: {
+      borderColor: '#cccccc',
+      borderWidth: 1,
+      borderRadius: 8,
+      padding: 12,
+      marginTop: 4,
+      marginBottom: 16,
+    },
+    passwordContainer: {
+      borderColor: '#cccccc',
+      borderWidth: 1,
+      borderRadius: 8,
+      padding: 12,
+      marginTop: 4,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    passwordInput: {
+      flex: 1,
+    },
+    eyeIcon: {
+      color: '#7a7a7a',
+    },
+    rememberForgotContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginVertical: 12,
+    },
+    rememberContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    rememberText: {
+      marginLeft: 8,
+      color: '#666666',
+    },
+    forgotText: {
+      color: '#d32f2f',
+    },
+    loginButton: {
+      backgroundColor: '#1e88e5',
+      paddingVertical: 14,
+      borderRadius: 8,
+    },
+    loginButtonText: {
+      color: 'white',
+      textAlign: 'center',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    orSeparator: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 20,
+    },
+    separatorLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: '#cccccc',
+    },
+    orText: {
+      marginHorizontal: 16,
+      color: '#757575',
+    },
+    facebookButton: {
+      backgroundColor: '#3b5998',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 14,
+      borderRadius: 8,
+      marginBottom: 12,
+    },
+    googleButton: {
+      borderColor: '#cccccc',
+      borderWidth: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 14,
+      borderRadius: 8,
+    },
+    socialIcon: {
+      width: 24,
+      height: 24,
+      marginLeft: 16,
+    },
+    socialButtonText: {
+      color: 'white',
+      textAlign: 'center',
+      flex: 1,
+      fontSize: 18,
+    },
+    socialGoogleText: {
+      color: 'black',
+      textAlign: 'center',
+      flex: 1,
+      fontSize: 18,
+    },
+    signupContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginTop: 20,
+    },
+    signupText: {
+      color: '#666666',
+    },
+    signupLink: {
+      color: '#1e88e5',
+      fontWeight: 'bold',
+      marginLeft: 4,
+    },
+  });
+  
