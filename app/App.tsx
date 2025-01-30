@@ -6,6 +6,7 @@ import SecondPage from '@/app/SecondPage';
 import Login from '@/app/Login';
 import Signup from '@/app/Signup';
 import Forget from '@/app/Signup';
+import Home from '@/app/Home';
 
 
 
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   Login:undefined;
   Signup:undefined;
   Forget:undefined;
+  Home:undefined;
 
 };
 
@@ -30,6 +32,8 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
         <Stack.Screen name="Signup" component={Signup} options={{ title: 'Signup' }} />
         <Stack.Screen name="Forget" component={Forget} options={{ title: 'Forget' }} />
+        <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

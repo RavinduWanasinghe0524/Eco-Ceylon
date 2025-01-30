@@ -54,7 +54,7 @@ export default function Login() {
       </View>  
 
       {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Home')}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
 

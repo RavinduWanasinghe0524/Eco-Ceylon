@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, TouchableOpacity, StyleSheet, Dimensions }
 
 const { width, height } = Dimensions.get('window');
 
-export default function SecondPage() {
+export default function Forget() {
   return (
        
         <View style={styles.overlay}>
